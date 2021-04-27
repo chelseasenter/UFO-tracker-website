@@ -1,10 +1,10 @@
 // from data.js
 var tableData = data;
-var datetime = [];
-var city = [];
-var state = [];
-var country = [];
-var shape = [];
+// var datetime = [];
+// var city = [];
+// var state = [];
+// var country = [];
+// var shape = [];
 
 // YOUR CODE HERE!
 var tbody = d3.select("tbody");
@@ -20,23 +20,31 @@ showData(data);
 // nested switch statements?
 
 function showData(ufosightings) {
-
+  datetime = [];
+  city = [];
+  state = [];
+  country = [];
+  shape = [];
   d3.selectAll('select').html('');
   tbody.html('');
   ufosightings.forEach((obj) => {
+    // console.log("under forEach 1")
     var row = tbody.append("tr");
     Object.entries(obj).forEach(([key, value]) => {
+      // console.log("under forEach 2")
       // #1 - showing the key and value forEach
-      // console.log([key, value])
+      console.log([key, value])
       var cell = row.append("td");
       cell.text(value);
       if (key == 'datetime') {
         // #2 - shows each row iteration of datetime 
-        // console.log(datetime)
+        console.log(datetime)
         if (!datetime.includes(value)) {
           datetime.push(value)
           // #3 - shows only the datetimes added (unique values) to dropdown list
-          // console.log(datetime)
+          console.log("added:")
+          console.log(datetime)
+          console.log("end added.")
           d3.select('#datetime').append('option').text(value);
         };
       };
@@ -66,6 +74,8 @@ function showData(ufosightings) {
       };
     });
   });
+  console.log("ufosightings")
+  console.log(ufosightings)
 };
 
 
@@ -85,11 +95,11 @@ function handleChange() {
   var key = d3.select(this).node().id;
   var val = d3.select(this).node().value;
 
-  console.log("this is filtered data:")
   console.log(d3.select(this).node().id)
   console.log(d3.select(this).node().value)
 
   filteredData = filteredData.filter(obj => obj[key] == val);
+  console.log("filteredData")
   console.log(filteredData)
 
   showData(filteredData);
@@ -99,7 +109,8 @@ function handleChange() {
 d3.selectAll('button').on('change', resetSearch);
 
 function resetSearch() {
-  showData(data);
+  filteredData = data
+  showData(filteredData);
   console.log("data reset")
 }
 // Select the input element and get the raw HTML node
@@ -120,3 +131,13 @@ function resetSearch() {
 
   // console.log(tableData)
   // console.log(filteredData) 
+console.log(" ")
+console.log(" ")
+console.log(" ")
+console.log(" ")
+console.log("--------- FULL RUN THROUGH --------")
+console.log(" ")
+console.log(" ")
+console.log(" ")
+console.log(" ")
+
