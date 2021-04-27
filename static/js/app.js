@@ -11,18 +11,32 @@ var tbody = d3.select("tbody");
 
 showData(data);
 
+// Notes for Tuesday: 
+// The 'if' statements are where everything starts to break down
+// First pass, everything is good, dropdown list generated (see #2 or #3 before change)
+// Second pass, nothing is added to dropdown lists (see #3 after change)
+// AND datetime list does not change (see #2 after change)
+
+// nested switch statements?
 
 function showData(ufosightings) {
+
   d3.selectAll('select').html('');
   tbody.html('');
   ufosightings.forEach((obj) => {
     var row = tbody.append("tr");
     Object.entries(obj).forEach(([key, value]) => {
+      // #1 - showing the key and value forEach
+      // console.log([key, value])
       var cell = row.append("td");
       cell.text(value);
       if (key == 'datetime') {
+        // #2 - shows each row iteration of datetime 
+        // console.log(datetime)
         if (!datetime.includes(value)) {
           datetime.push(value)
+          // #3 - shows only the datetimes added (unique values) to dropdown list
+          // console.log(datetime)
           d3.select('#datetime').append('option').text(value);
         };
       };
@@ -53,7 +67,10 @@ function showData(ufosightings) {
     });
   });
 };
-// add IF statement for #datetime; if user input == data in Date column of data.js, display that row
+
+
+// showData(data);
+
 
 // Select the button
 var button = d3.select("button");
@@ -67,9 +84,23 @@ var filteredData = data;
 function handleChange() {
   var key = d3.select(this).node().id;
   var val = d3.select(this).node().value;
-  console.log(filteredData)
+
+  console.log("this is filtered data:")
+  console.log(d3.select(this).node().id)
+  console.log(d3.select(this).node().value)
+
   filteredData = filteredData.filter(obj => obj[key] == val);
+  console.log(filteredData)
+
   showData(filteredData);
+
+}
+
+d3.selectAll('button').on('change', resetSearch);
+
+function resetSearch() {
+  showData(data);
+  console.log("data reset")
 }
 // Select the input element and get the raw HTML node
 
@@ -82,7 +113,7 @@ function handleChange() {
 // Create the function to search and filter date search of ufo sightings
 // function searchUFO() {
 //   var inputElement = d3.select("#datetime").node().value;
-//   // var filteredData = data.filter(sighting => sighting.datetime === inputElement);
+//   // var filteredData = data.filter(sighting => sighting.datetime == inputElement);
 //   console.log(inputElement)
 //   showData(filteredData);
 // };
