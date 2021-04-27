@@ -15,7 +15,6 @@ showData(data);
 // can't select first item in each dropdown, add placeholder?
 // old js file for level-1 index.html (save placeholder file as app.js)
 // app2.js is file for level-2
-
 function showData(ufosightings) {
   datetime = [];
   city = [];
@@ -24,24 +23,18 @@ function showData(ufosightings) {
   shape = [];
   d3.selectAll('select').html('');
   tbody.html('');
+  d3.selectAll('select').append('option');
   ufosightings.forEach((obj) => {
-    // console.log("under forEach 1")
     var row = tbody.append("tr");
     Object.entries(obj).forEach(([key, value]) => {
-      // console.log("under forEach 2")
       // #1 - showing the key and value forEach
-      console.log([key, value])
       var cell = row.append("td");
       cell.text(value);
       if (key == 'datetime') {
         // #2 - shows each row iteration of datetime 
-        console.log(datetime)
         if (!datetime.includes(value)) {
           datetime.push(value)
           // #3 - shows only the datetimes added (unique values) to dropdown list
-          console.log("added:")
-          console.log(datetime)
-          console.log("end added.")
           d3.select('#datetime').append('option').text(value);
         };
       };
@@ -71,8 +64,6 @@ function showData(ufosightings) {
       };
     });
   });
-  console.log("ufosightings")
-  console.log(ufosightings)
 };
 
 
@@ -92,12 +83,8 @@ function handleChange() {
   var key = d3.select(this).node().id;
   var val = d3.select(this).node().value;
 
-  console.log(d3.select(this).node().id)
-  console.log(d3.select(this).node().value)
 
   filteredData = filteredData.filter(obj => obj[key] == val);
-  console.log("filteredData")
-  console.log(filteredData)
 
   showData(filteredData);
 
@@ -108,7 +95,6 @@ d3.selectAll('button').on('change', resetSearch);
 function resetSearch() {
   filteredData = data
   showData(filteredData);
-  console.log("data reset")
 }
 // Select the input element and get the raw HTML node
 
@@ -122,19 +108,7 @@ function resetSearch() {
 // function searchUFO() {
 //   var inputElement = d3.select("#datetime").node().value;
 //   // var filteredData = data.filter(sighting => sighting.datetime == inputElement);
-//   console.log(inputElement)
 //   showData(filteredData);
 // };
 
-  // console.log(tableData)
-  // console.log(filteredData) 
-console.log(" ")
-console.log(" ")
-console.log(" ")
-console.log(" ")
-console.log("--------- FULL RUN THROUGH --------")
-console.log(" ")
-console.log(" ")
-console.log(" ")
-console.log(" ")
 
